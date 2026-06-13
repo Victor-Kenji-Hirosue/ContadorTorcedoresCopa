@@ -1,0 +1,11 @@
+.navbar {
+  position: relative;
+}
+
+.navbar-title {
+  font-weight: 800;
+  letter-spacing: 0.7px;
+   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}

@@ -1,16 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Logout</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+<mat-toolbar color="primary" class="navbar">
+   <button mat-icon-button [matMenuTriggerFor]="opcoesMenu" aria-label="Menu de opções">
+    <mat-icon>menu</mat-icon>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
 
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/torcedores">Torcedores</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/times">Times</a>
-      </li>
-    </ul>
-  </div>
+  <a class="navbar-title nav-link" routerLink="/torcedores">⚽ Gestão de Times</a>
+
+
+  </mat-toolbar>
+  <mat-menu #opcoesMenu="matMenu">
+  <!-- Opção Escolher Time -->
+  <button mat-menu-item>
+    <mat-icon>sports_soccer</mat-icon>
+    <span>Escolher Time</span>
+  </button>
+
+  <!-- Opção Sair -->
+  <button mat-menu-item routerLink="/login">
+    <mat-icon color="warn">logout</mat-icon>
+    <span class="text-danger">Sair</span>
+  </button>
+</mat-menu>
+
+

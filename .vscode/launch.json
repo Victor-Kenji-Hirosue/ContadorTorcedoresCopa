@@ -3,6 +3,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "ContadorcopaApplication",
+      "request": "launch",
+      "mainClass": "com.victorkenji.contadorcopa.ContadorcopaApplication",
+      "projectName": "contadorcopa"
+    },
+    {
       "name": "ng serve",
       "type": "chrome",
       "request": "launch",

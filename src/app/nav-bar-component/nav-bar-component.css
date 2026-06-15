@@ -1,7 +1,11 @@
 .navbar {
   position: relative;
+  background-color: #0d0063;
+  color: #dcdce6;
 }
-
+.mat-icon {
+  color: #dcdce6;
+}
 .navbar-title {
   font-weight: 800;
   letter-spacing: 0.7px;

@@ -18,6 +18,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+
 
 @NgModule({
   declarations: [
@@ -38,6 +41,8 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatMenuModule,
     MatInputModule,
+    MatTableModule,
+    MatSortModule,
 
     NgbModule,
     ReactiveFormsModule,

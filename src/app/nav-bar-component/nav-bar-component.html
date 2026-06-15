@@ -3,17 +3,22 @@
     <mat-icon>menu</mat-icon>
   </button>
 
-  <a class="navbar-title nav-link" routerLink="/torcedores">⚽ Gestão de Times</a>
+  <a class="navbar-title nav-link" routerLink="/torcedores">Todos Torcendo pela Copa!</a>
 
 
 </mat-toolbar>
-  <mat-menu #opcoesMenu="matMenu">
-  <button mat-menu-item>
+<mat-menu #opcoesMenu="matMenu">
+  <button mat-menu-item routerLink="/torcedores">
     <mat-icon>sports_soccer</mat-icon>
+    <span>Top Países</span>
+  </button>
+
+  <button mat-menu-item routerLink="/times">
+    <mat-icon>compare_arrows</mat-icon>
     <span>Escolher Time</span>
   </button>
 
-  <button mat-menu-item routerLink="/login">
+  <button mat-menu-item routerLink="/auth/login">
     <mat-icon color="warn">logout</mat-icon>
     <span class="text-danger">Sair</span>
   </button>

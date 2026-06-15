@@ -4,7 +4,7 @@
   @if (timeSelecionado) {
   <div class="selection-alert">
       <span>Atualmente você está torcendo para: <strong>{{ timeSelecionado }}</strong></span>
-      <button mat-raised-button color="warn" (click)="salvarTimeSelecionado()">
+      <button mat-raised-button (click)="salvarTimeSelecionado()" routerLink="/torcedores">
         Salvar Seleção
         <mat-icon>done_outline</mat-icon>
       </button>

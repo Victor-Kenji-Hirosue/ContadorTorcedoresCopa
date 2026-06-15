@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+
 import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-torcedores-component',
@@ -29,6 +31,8 @@ export class TorcedoresComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
 
   ngOnInit(): void {
    this.dataSource.data = this.listaDeTimes;
@@ -37,6 +41,10 @@ export class TorcedoresComponent implements OnInit, AfterViewInit {
    ngAfterViewInit() {
     // Conecta o robô de ordenação à nossa fonte de dados
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = 'Itens por página:';
+    this.paginator._intl.nextPageLabel = 'Próxima página';
+    this.paginator._intl.previousPageLabel = 'Página anterior';
 
     // Configura para que a coluna de torcedores já comece do MAIOR para o MENOR
     this.sort.sort({ id: 'torcedores', start: 'desc', disableClear: false });

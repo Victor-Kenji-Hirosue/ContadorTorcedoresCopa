@@ -47,6 +47,11 @@
       </tr>
     </table>
 
+    <mat-paginator
+    pageSize="10"
+    hidePageSize="true"
+    aria-label="Selecione a página de times">
+    </mat-paginator>
     <!-- Exibe o aviso se a busca não trouxer nenhum resultado -->
     @if (listaDeTimes.length === 0) {
       <p class="no-results">Nenhum time cadastrado corresponde à sua pesquisa.</p>

@@ -51,13 +51,12 @@ public class TorcedorService{
         return repository.findById(id).map(TorcedorMapper::toDTO).orElseThrow(() -> new EntityNotFoundException("Torcedor não cadastro"));
     }
 
-    public TorcedorResponse cadastrar(TorcedorRequest torcedor){
-
-        Time time = timeRepository.findById(torcedor.timeId())
+    public TorcedorResponse cadastrarNovoTorcedor(TorcedorRequest dto) {
+        Time time = timeRepository.findById(dto.timeId())
                 .orElseThrow(() -> new RuntimeException("Time não encontrado"));
-                
-        Torcedores t = repository.save(TorcedorMapper.toEntity(torcedor, time));
-        return TorcedorMapper.toDTO(t);
+
+        Torcedores novoTorcedor = TorcedorMapper.toEntity(dto, time);
+        return TorcedorMapper.toDTO(repository.save(novoTorcedor));
     }
 
 

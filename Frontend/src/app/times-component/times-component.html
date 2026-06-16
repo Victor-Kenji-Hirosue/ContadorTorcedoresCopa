@@ -1,10 +1,10 @@
 <app-nav-bar-component></app-nav-bar-component>
 <div class="page-content">
   <h2>Escolha seu Time!</h2>
-  @if (timeSelecionado) {
+  @if (dadosService.timeSelecionado) {
   <div class="selection-alert">
-      <span>Atualmente você está torcendo para: <strong>{{ timeSelecionado }}</strong></span>
-      <button mat-raised-button (click)="salvarTimeSelecionado()" routerLink="/torcedores">
+      <span>Atualmente você está torcendo para: <strong>{{ dadosService.timeSelecionado }}</strong></span>
+      <button mat-raised-button (click)="dadosService.salvarTimeSelecionado()" routerLink="/torcedores">
         Salvar Seleção
         <mat-icon>done_outline</mat-icon>
       </button>
@@ -13,15 +13,15 @@
   <div class="search-container">
     <mat-form-field appearance="outline" class="search-field">
       <mat-label>Pesquisar Time</mat-label>
-      <input matInput type="text" [(ngModel)]="_termoBusca" placeholder="Brasil">
+      <input matInput type="text" [(ngModel)]="dadosService._termoBusca" placeholder="Brasil">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </div>
 
   <div class="cards-grid">
 
-    @for (time of timesFiltrados; track time.nome) {
-      <mat-card [class.active-card]="timeSelecionado === time.nome" class="time-card">
+    @for (time of dadosService.timesFiltrados; track time.nome) {
+      <mat-card [class.active-card]="dadosService.timeSelecionado === time.nome" class="time-card">
         <img class="card-avatar" [src]="'https://flagcdn.com/w320/' + (time.nome.toLowerCase() === 'brasil' ? 'br' : time.nome.toLowerCase().substring(0,2)) + '.png'"
         alt="{{ time.nome }} Logo"
         (error)="$any($event.target).src = 'https://flagcdn.com/w320/un.png'">
@@ -36,14 +36,14 @@
             <span><strong>{{ time.torcedores | number }}</strong> torcedores Atualmente</span>
           </div>
         </mat-card-content>
-        @if (timeSelecionado === time.nome) {
+        @if (dadosService.timeSelecionado === time.nome) {
           <div class="selected-indicator">
             <mat-icon>check_circle</mat-icon>
             <span>Você está torcendo para esta seleção!</span>
           </div>
         }@else{
         <mat-card-actions >
-          <button mat-raised-button class="torcer" color="primary" (click)="selecionarTime(time.nome)">
+          <button mat-raised-button class="torcer" color="primary" (click)="dadosService.selecionarTime(time.nome)">
             Torcer para esta seleção
           </button>
         </mat-card-actions>

@@ -1,0 +1,12 @@
+.page-content {
+  background-color: #006302;
+  padding: 30px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: #0d0063;
+  margin-bottom: 20px;
+  height: 100%;
+}
+.page-content h2 {
+  color: #dcdce6;
+  margin-bottom: 20px;
+}/* Container que adiciona rolagem se a tela for muito pequena */

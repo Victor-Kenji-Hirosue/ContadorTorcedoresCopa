@@ -1,4 +1,4 @@
-import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { LOCALE_ID, NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -22,6 +22,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+
+import { TimesService } from './times-component/times-service';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers: [provideBrowserGlobalErrorListeners()],
+  providers: [
+    TimesService,
+    { provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [App],
 })
 export class AppModule {}

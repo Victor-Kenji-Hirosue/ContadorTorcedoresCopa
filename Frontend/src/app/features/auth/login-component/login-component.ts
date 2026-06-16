@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TimesService } from '../../../times-component/times-service';
+
 
 @Component({
   selector: 'app-login-component',
@@ -10,9 +12,13 @@ import { Router } from '@angular/router';
 
 })
 export class LoginComponent {
-
   loginForm: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router ) {
+   mensagemErro: string = '';
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private dadosService: TimesService ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -21,10 +27,21 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log('Dados de login enviados:', this.loginForm.value);
-      this.router.navigate(['/times']);
-    } else {
-      console.log('Formulário inválido.');
+      const credenciais = {
+        email: this.loginForm.value.email,
+        senha: this.loginForm.value.password
+      };
+
+      this.dadosService.fazerLogin(credenciais).subscribe({
+        next: (usuarioLogado) => {
+          console.log('Login aceito pelo H2 para:', usuarioLogado.nome);
+          this.mensagemErro = '';
+          this.router.navigate(['/time']);
+        },
+        error: (err) => {
+          this.mensagemErro = err.error || 'Erro ao conectar com o servidor.';
+        }
+      });
     }
   }
 

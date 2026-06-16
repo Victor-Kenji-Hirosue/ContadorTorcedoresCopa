@@ -1,0 +1,47 @@
+<div class="cadastro-container">
+  <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()" class="cadastro-form">
+    <h2>Criar Nova Conta</h2>
+
+    <!-- Alertas de Feedback -->
+    @if (mensagemErro) { <div class="alert alert-danger">⚠️ {{ mensagemErro }}</div> }
+    @if (mensagemSucesso) { <div class="alert alert-success">✅ {{ mensagemSucesso }}</div> }
+
+    <!-- Campo E-mail -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>E-mail</mat-label>
+      <input matInput type="email" formControlName="email" placeholder="Ex: carlos@email.com">
+      @if (cadastroForm.get('email')?.touched && cadastroForm.get('email')?.invalid) {
+        <mat-error>Digite un e-mail válido.</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Campo Senha -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Senha</mat-label>
+      <input matInput type="password" formControlName="senha" placeholder="Mínimo 6 caracteres">
+      @if (cadastroForm.get('senha')?.touched && cadastroForm.get('senha')?.invalid) {
+        <mat-error>A senha precisa ter pelo menos 6 caracteres.</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Campo Seleção do Time -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Selecione seu Time</mat-label>
+      <mat-select formControlName="timeId">
+        @for (time of dadosService.getListaDeTimesDoBanco(); track time.id) {
+          <!-- O value envia o ID do time para o DTO e o texto exibe o Nome do clube -->
+          <mat-option [value]="time.id">{{ time.name }}</mat-option>
+        }
+      </mat-select>
+      @if (cadastroForm.get('timeId')?.touched && cadastroForm.get('timeId')?.invalid) {
+        <mat-error>Você precisa escolher um clube.</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Ações do Formulário -->
+    <div class="actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="cadastroForm.invalid">Cadastrar</button>
+      <button mat-button type="button" routerLink="/auth/login">Já tenho conta (Voltar)</button>
+    </div>
+  </form>
+</div>

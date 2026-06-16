@@ -43,7 +43,7 @@
       <!-- Configuração das linhas da tabela -->
       <tr mat-header-row *matHeaderRowDef="colunasExibidas"></tr>
       <tr mat-row *matRowDef="let row; columns: colunasExibidas;"
-          [class.active-row]="dadosService.timeSelecionado === row.nome">
+          [class.active-row]="dadosService.obterTimeDoTorcedorLogado === row.nome">
       </tr>
     </table>
 

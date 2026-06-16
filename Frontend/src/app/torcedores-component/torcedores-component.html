@@ -1,0 +1,60 @@
+<app-nav-bar-component></app-nav-bar-component>
+<div class="page-content">
+  <h2>Top Países mais Torcidos</h2>
+  <div class="table-container">
+
+    <!-- A mat-table recebe a nossa lista de times filtrados direto do serviço -->
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1 custom-table">
+
+      <!-- Coluna do bandeira -->
+      <ng-container matColumnDef="bandeira">
+        <th mat-header-cell *matHeaderCellDef> bandeira </th>
+        <td mat-cell *matCellDef="let time">
+          <div class="table-avatar">
+            <img [src]="'https://flagcdn.com/w320/' + (time.nome.toLowerCase() === 'brasil' ? 'br' : time.nome.toLowerCase().substring(0,2)) + '.png'"
+          alt="{{ time.nome }} Logo"
+          (error)="$any($event.target).src = 'https://flagcdn.com/w320/un.png'"
+          class="table-logo-img" >
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Coluna do Nome -->
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef> Nome </th>
+        <td mat-cell *matCellDef="let time" class="text-bold"> {{ time.nome }} </td>
+      </ng-container>
+
+      <!-- Coluna da Fase -->
+      <ng-container matColumnDef="fase">
+        <th mat-header-cell *matHeaderCellDef> Fase </th>
+        <td mat-cell *matCellDef="let time">
+          <span class="badge-serie">{{ time.fase }}</span>
+        </td>
+      </ng-container>
+
+      <!-- Coluna de Torcedores -->
+      <ng-container matColumnDef="torcedores">
+        <th mat-header-cell *matHeaderCellDef> Torcedores </th>
+        <td mat-cell *matCellDef="let time"> {{ time.torcedores | number }} </td>
+      </ng-container>
+
+
+      <!-- Configuração das linhas da tabela -->
+      <tr mat-header-row *matHeaderRowDef="colunasExibidas"></tr>
+      <tr mat-row *matRowDef="let row; columns: colunasExibidas;"
+          [class.active-row]="timeSelecionado === row.nome">
+      </tr>
+    </table>
+
+    <mat-paginator
+    pageSize="10"
+    hidePageSize="true"
+    aria-label="Selecione a página de times">
+    </mat-paginator>
+    <!-- Exibe o aviso se a busca não trouxer nenhum resultado -->
+    @if (listaDeTimes.length === 0) {
+      <p class="no-results">Nenhum time cadastrado corresponde à sua pesquisa.</p>
+    }
+  </div>
+<app-footer-component></app-footer-component>

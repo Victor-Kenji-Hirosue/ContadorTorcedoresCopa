@@ -1,0 +1,57 @@
+<app-nav-bar-component></app-nav-bar-component>
+<div class="page-content">
+  <h2>Escolha seu Time!</h2>
+  @if (timeSelecionado) {
+  <div class="selection-alert">
+      <span>Atualmente você está torcendo para: <strong>{{ timeSelecionado }}</strong></span>
+      <button mat-raised-button (click)="salvarTimeSelecionado()" routerLink="/torcedores">
+        Salvar Seleção
+        <mat-icon>done_outline</mat-icon>
+      </button>
+  </div>
+  }
+  <div class="search-container">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Pesquisar Time</mat-label>
+      <input matInput type="text" [(ngModel)]="_termoBusca" placeholder="Brasil">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="cards-grid">
+
+    @for (time of timesFiltrados; track time.nome) {
+      <mat-card [class.active-card]="timeSelecionado === time.nome" class="time-card">
+        <img class="card-avatar" [src]="'https://flagcdn.com/w320/' + (time.nome.toLowerCase() === 'brasil' ? 'br' : time.nome.toLowerCase().substring(0,2)) + '.png'"
+        alt="{{ time.nome }} Logo"
+        (error)="$any($event.target).src = 'https://flagcdn.com/w320/un.png'">
+        <mat-card-header>
+          <mat-card-title>{{ time.nome }}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p>Este clube disputa atualmente a <strong>{{ time.fase }}</strong> do campeonato nacional.</p>
+          <div class="fans-info">
+            <mat-icon class="fans-icon">groups</mat-icon>
+            <span><strong>{{ time.torcedores | number }}</strong> torcedores Atualmente</span>
+          </div>
+        </mat-card-content>
+        @if (timeSelecionado === time.nome) {
+          <div class="selected-indicator">
+            <mat-icon>check_circle</mat-icon>
+            <span>Você está torcendo para esta seleção!</span>
+          </div>
+        }@else{
+        <mat-card-actions >
+          <button mat-raised-button class="torcer" color="primary" (click)="selecionarTime(time.nome)">
+            Torcer para esta seleção
+          </button>
+        </mat-card-actions>
+      }
+      </mat-card>
+    } @empty {
+      <p class="no-results">Nenhuma seleção corresponde à sua pesquisa.</p>
+    }
+  </div>
+</div>
+<app-footer-component></app-footer-component>

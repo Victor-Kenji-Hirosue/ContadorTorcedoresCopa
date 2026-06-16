@@ -2,7 +2,9 @@ package com.victorkenji.contadorcopa.services;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.victorkenji.contadorcopa.dtos.LoginDTO;
 import com.victorkenji.contadorcopa.dtos.TorcedorRequest;
@@ -51,11 +53,20 @@ public class TorcedorService{
         return repository.findById(id).map(TorcedorMapper::toDTO).orElseThrow(() -> new EntityNotFoundException("Torcedor não cadastro"));
     }
 
-    public TorcedorResponse cadastrarNovoTorcedor(TorcedorRequest dto) {
+        public boolean emailJaExiste(String email) {
+        return repository.existsByEmail(email);
+        }
+
+        public TorcedorResponse cadastrarNovoTorcedor(TorcedorRequest dto) {
+        if (repository.existsByEmail(dto.email())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email já cadastrado");
+        }
+
         Time time = timeRepository.findById(dto.timeId())
                 .orElseThrow(() -> new RuntimeException("Time não encontrado"));
 
         Torcedores novoTorcedor = TorcedorMapper.toEntity(dto, time);
+
         return TorcedorMapper.toDTO(repository.save(novoTorcedor));
     }
 

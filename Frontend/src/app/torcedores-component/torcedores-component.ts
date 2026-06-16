@@ -48,7 +48,4 @@ export class TorcedoresComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  selecionar(nomeDoTime: string) {
-    this.dadosService.timeSelecionado = nomeDoTime;
-  }
 }

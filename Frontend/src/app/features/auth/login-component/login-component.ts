@@ -35,6 +35,8 @@ export class LoginComponent {
       this.dadosService.fazerLogin(credenciais).subscribe({
         next: (usuarioLogado) => {
           console.log('Login aceito pelo H2 para:', usuarioLogado.nome);
+          this.dadosService.torcedorLogado = usuarioLogado;
+          this.dadosService.timeSelecionado = usuarioLogado.nomeTime;
           this.mensagemErro = '';
           this.router.navigate(['/time']);
         },

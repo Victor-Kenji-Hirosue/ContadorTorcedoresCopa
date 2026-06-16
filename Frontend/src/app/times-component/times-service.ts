@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class TimesService {
   _termoBusca = signal<string>('');
+  timeSelecionado: any = null;
   private listaDeTimesDoBanco = signal<any[]>([]);
   public getListaDeTimesDoBanco(): any[] {
      return this.listaDeTimesDoBanco();
@@ -67,7 +68,6 @@ export class TimesService {
     }
     return 'Nenhum time selecionado';
   }
-
 
   todosOsTimes = computed(() => {
   return this.listaDeTimesDoBanco();

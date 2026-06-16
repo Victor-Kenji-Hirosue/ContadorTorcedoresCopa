@@ -8,4 +8,5 @@ import com.victorkenji.contadorcopa.entities.Torcedores;
 public interface TorcedorRepository extends JpaRepository<Torcedores, Long>{
 
     Optional<Torcedores> findByEmail(String email);
+    boolean existsByEmail(String email);
 }

@@ -47,8 +47,8 @@ public ResponseEntity<?> efetuarLogin(@RequestBody LoginDTO loginDto) {
     }
 }
     @PostMapping
-    public TorcedorResponse cadastrar(@RequestBody TorcedorRequest dto) {
-        return service.cadastrarNovoTorcedor(dto);
-    }
+   public ResponseEntity<TorcedorResponse> cadastrar(@RequestBody TorcedorRequest dto) {
+    return ResponseEntity.ok(service.cadastrarNovoTorcedor(dto));
+}
     
 }

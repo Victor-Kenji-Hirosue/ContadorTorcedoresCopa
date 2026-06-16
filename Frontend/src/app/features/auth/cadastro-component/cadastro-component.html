@@ -6,7 +6,6 @@
     @if (mensagemErro) { <div class="alert alert-danger">⚠️ {{ mensagemErro }}</div> }
     @if (mensagemSucesso) { <div class="alert alert-success">✅ {{ mensagemSucesso }}</div> }
 
-    <!-- Campo E-mail -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>E-mail</mat-label>
       <input matInput type="email" formControlName="email" placeholder="Ex: carlos@email.com">
@@ -15,7 +14,6 @@
       }
     </mat-form-field>
 
-    <!-- Campo Senha -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Senha</mat-label>
       <input matInput type="password" formControlName="senha" placeholder="Mínimo 6 caracteres">
@@ -24,21 +22,22 @@
       }
     </mat-form-field>
 
-    <!-- Campo Seleção do Time -->
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Selecione seu Time</mat-label>
-      <mat-select formControlName="timeId">
-        @for (time of dadosService.getListaDeTimesDoBanco(); track time.id) {
-          <!-- O value envia o ID do time para o DTO e o texto exibe o Nome do clube -->
-          <mat-option [value]="time.id">{{ time.name }}</mat-option>
-        }
-      </mat-select>
-      @if (cadastroForm.get('timeId')?.touched && cadastroForm.get('timeId')?.invalid) {
-        <mat-error>Você precisa escolher um clube.</mat-error>
-      }
-    </mat-form-field>
+  <mat-label>Selecione seu Time</mat-label>
 
-    <!-- Ações do Formulário -->
+  <mat-select formControlName="timeId">
+    @for (time of dadosService.getListaDeTimesDoBanco(); track time.id) {
+      <mat-option [value]="time.id">
+        {{ time.name }}
+      </mat-option>
+    }
+  </mat-select>
+
+  @if (cadastroForm.get('timeId')?.touched && cadastroForm.get('timeId')?.invalid) {
+    <mat-error>Você precisa escolher uma seleção.</mat-error>
+  }
+</mat-form-field>
+
     <div class="actions">
       <button mat-raised-button color="primary" type="submit" [disabled]="cadastroForm.invalid">Cadastrar</button>
       <button mat-button type="button" routerLink="/auth/login">Já tenho conta (Voltar)</button>

@@ -17,24 +17,21 @@ export class CadastroComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    public dadosService: TimesService // Injeta o serviço público
+    public dadosService: TimesService
   ) {
-    // Definimos os campos obrigatórios do formulário
     this.cadastroForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       senha: ['', [Validators.required, Validators.minLength(6)]],
-      timeId: ['', [Validators.required]] // Campo para selecionar o ID do time
+      timeId: ['', [Validators.required]]
     });
   }
 
   ngOnInit(): void {
-    // Garante que a lista de times do banco seja carregada para exibir no menu select
     this.dadosService.carregarTimesDoBackend();
   }
 
   onSubmit() {
     if (this.cadastroForm.valid) {
-      // Monta os dados no formato exato esperado pelo Record 'TorcedorCadastroDTO' do Java
       const novoTorcedor = {
         email: this.cadastroForm.value.email,
         senha: this.cadastroForm.value.senha,
@@ -42,21 +39,23 @@ export class CadastroComponent implements OnInit {
       };
 
       this.dadosService.cadastrarTorcedor(novoTorcedor).subscribe({
-        next: (resposta) => {
-          this.mensagemErro = '';
-          this.mensagemSucesso = 'Torcedor cadastrado com sucesso! Redirecionando...';
+    next: () => {
+      this.mensagemErro = '';
+      this.mensagemSucesso = 'Torcedor cadastrado com sucesso! Redirecionando...';
 
-          // Aguarda 2 segundos para o usuário ver o aviso de sucesso e o manda para o login
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 2000);
-        },
-        error: (err) => {
-          this.mensagemSucesso = '';
-          // Captura erros como e-mail já existente enviado pelo banco H2
-          this.mensagemErro = err.error || 'Erro ao realizar o cadastro. Tente novamente.';
-        }
-      });
+    },
+    error: (err) => {
+  this.mensagemSucesso = '';
+
+
+  if (err.status === 400) {
+    this.mensagemErro = 'Este email já está cadastrado.';
+    return;
+  }
+
+  this.mensagemErro = 'Erro ao realizar o cadastro. Tente novamente.';
+}
+  });
     }
   }
 }

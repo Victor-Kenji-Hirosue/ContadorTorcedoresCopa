@@ -41,9 +41,6 @@ public class TorcedorController{
 
     @PostMapping("/login")
 public ResponseEntity<?> efetuarLogin(@RequestBody LoginDTO loginDto) {
-    // ESTA LINHA VAI EXIBIR A MENSAGEM NO TERMINAL DA SUA IDE (Java)
-    System.out.println("O Angular acabou de chamar o Java! Tentando logar o e-mail: " + loginDto.email());
-    
     try {
         return ResponseEntity.ok(service.autenticar(loginDto));
     } catch (RuntimeException e) {

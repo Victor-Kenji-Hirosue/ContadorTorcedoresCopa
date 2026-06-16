@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, effect } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { TimesService } from '../times-component/times-service';
 
 @Component({
   selector: 'app-torcedores-component',
@@ -10,7 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './torcedores-component.html',
   styleUrl: './torcedores-component.css',
 })
-export class TorcedoresComponent implements OnInit, AfterViewInit {
+export class TorcedoresComponent implements AfterViewInit {
 
   timeSelecionado: string = '';
 
@@ -20,33 +21,34 @@ export class TorcedoresComponent implements OnInit, AfterViewInit {
 
   colunasExibidas: string[] = ['bandeira', 'nome', 'fase', 'torcedores'];
 
-  listaDeTimes = [
-    { nome: 'Brasil', fase: 'Fase 1',torcedores: 8000000, icone: 'star' },
-    { nome: 'Haiti', fase: 'Fase 1',torcedores: 12000000, icone: 'emoji_events' },
-    { nome: 'Marrocos', fase: 'Fase 1',torcedores: 12000000, icone: 'local_fire_department' },
-    { nome: 'Japão', fase: 'Fase 1',torcedores: 12000000, icone: 'auto_awesome' },
-    { nome: 'França', fase: 'Fase 1',torcedores: 16000000, icone: 'auto_awesome' }
-  ];
-
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  constructor(public dadosService: TimesService) {
+    effect(() => {
+      const times = this.dadosService.todosOsTimes();
 
-  ngOnInit(): void {
-   this.dataSource.data = this.listaDeTimes;
+      const timesOrdenados = [...times].sort((a, b) => {
+        const torcedoresA = a.quantidadeTorcedores || 0;
+        const torcedoresB = b.quantidadeTorcedores || 0;
+        return torcedoresB - torcedoresA; // Maior para o menor
+      });
+
+      this.dataSource.data = timesOrdenados;
+
+      if (this.paginator) {
+        this.dataSource.paginator = this.paginator;
+      }
+    });
+  }
+   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-   ngAfterViewInit() {
-    // Conecta o robô de ordenação à nossa fonte de dados
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.paginator._intl.itemsPerPageLabel = 'Itens por página:';
-    this.paginator._intl.nextPageLabel = 'Próxima página';
-    this.paginator._intl.previousPageLabel = 'Página anterior';
-
-    // Configura para que a coluna de torcedores já comece do MAIOR para o MENOR
-    this.sort.sort({ id: 'torcedores', start: 'desc', disableClear: false });
+  selecionar(nomeDoTime: string) {
+    this.dadosService.timeSelecionado = nomeDoTime;
   }
 }

@@ -8,7 +8,5 @@ import { TimesService } from "./times-service";
   styleUrl: './times-component.css',
 })
 export class TimesComponent{
-  constructor(public dadosService: TimesService){
-    this.dadosService.carregarTimesDoBackend();
-  }
+  constructor(public dadosService: TimesService){}
 }

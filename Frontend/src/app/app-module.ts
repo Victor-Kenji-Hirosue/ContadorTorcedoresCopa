@@ -24,6 +24,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { TimesService } from './times-component/times-service';
+import { MatOption } from "@angular/material/select";
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { TimesService } from './times-component/times-service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-
+    AppRoutingModule,
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
@@ -49,14 +50,14 @@ import { TimesService } from './times-component/times-service';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-
     NgbModule,
     ReactiveFormsModule,
     FormsModule,
-  ],
+    MatOption
+],
   providers: [
     TimesService,
-    { provide: LOCALE_ID, useValue: 'pt-BR' }],
+    provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })
 export class AppModule {}

@@ -59,18 +59,4 @@ public class TorcedorService{
         return TorcedorMapper.toDTO(repository.save(novoTorcedor));
     }
 
-
-    public TorcedorResponse mudarDeTime(Long torcedorId, Long novoTimeId) {
-        Torcedores t = repository.findById(torcedorId)
-                .orElseThrow(() -> new RuntimeException("Torcedor não encontrado com o ID: " + torcedorId));
-
-        Time novoTime = timeRepository.findById(novoTimeId)
-                .orElseThrow(() -> new RuntimeException("Novo time não encontrado com o ID: " + novoTimeId));
-
-        t.setTime(novoTime);
-
-        Torcedores torcedorAtualizado = repository.save(t);
-
-        return TorcedorMapper.toDTO(torcedorAtualizado);
-    }
 }

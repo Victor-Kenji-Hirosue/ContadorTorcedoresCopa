@@ -14,11 +14,10 @@ import com.victorkenji.contadorcopa.dtos.TorcedorRequest;
 import com.victorkenji.contadorcopa.dtos.TorcedorResponse;
 import com.victorkenji.contadorcopa.services.TorcedorService;
 
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
 
 
 
@@ -51,12 +50,5 @@ public ResponseEntity<?> efetuarLogin(@RequestBody LoginDTO loginDto) {
     public TorcedorResponse cadastrar(@RequestBody TorcedorRequest dto) {
         return service.cadastrarNovoTorcedor(dto);
     }
-
-    @PutMapping("/{id}/mudar-time")
-    public TorcedorResponse mudarTime(@PathVariable long id, @RequestBody Long novoTimeId) {
-        return service.mudarDeTime(id, novoTimeId);
-
-    }
-    
     
 }

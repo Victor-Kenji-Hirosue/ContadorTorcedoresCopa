@@ -1,15 +1,13 @@
 <app-nav-bar-component></app-nav-bar-component>
 <div class="page-content">
   <h2>Escolha seu Time!</h2>
-  @if (dadosService.timeSelecionado) {
+  @if (dadosService.obterTimeDoTorcedorLogado) {
+    @if (dadosService.obterTimeDoTorcedorLogado) {
   <div class="selection-alert">
-      <!-- Ajustado para timeSelecionado (certifique-se de que o service guarda o .name) -->
-      <span>Atualmente você está torcendo para: <strong>{{ dadosService.timeSelecionado }}</strong></span>
-      <button mat-raised-button (click)="dadosService.salvarTimeSelecionado()" routerLink="/torcedores">
-        Salvar Seleção
-        <mat-icon>done_outline</mat-icon>
-      </button>
+      <span>Você está torcendo para: <strong>{{ dadosService.obterTimeDoTorcedorLogado}}</strong></span>
   </div>
+  }
+
   }
   <div class="search-container">
     <mat-form-field appearance="outline" class="search-field">
@@ -22,7 +20,7 @@
   <div class="cards-grid">
 
     @for (time of dadosService.timesFiltrados(); track time.id) {
-      <mat-card [class.active-card]="dadosService.timeSelecionado === time.name" class="time-card">
+      <mat-card [class.active-card]="dadosService.obterTimeDoTorcedorLogado === time.name" class="time-card">
 
         <img class="card-avatar" [src]="'https://flagcdn.com/w320/' + (time.name.toLowerCase() === 'brasil' ? 'br' : time.name.toLowerCase().substring(0,2)) + '.png'"
         alt="{{ time.name }} Logo"
@@ -40,18 +38,12 @@
           </div>
         </mat-card-content>
 
-        @if (dadosService.timeSelecionado === time.name) {
+        @if (dadosService.obterTimeDoTorcedorLogado === time.name) {
           <div class="selected-indicator">
-            <mat-icon>check_circle</mat-icon>
+            <mat-icon>sports_soccer</mat-icon>
             <span>Você está torcendo para esta seleção!</span>
           </div>
-        }@else{
-        <mat-card-actions >
-          <button mat-raised-button class="torcer" color="primary" (click)="dadosService.selecionarTime(time.name)">
-            Torcer para esta seleção
-          </button>
-        </mat-card-actions>
-      }
+        }
       </mat-card>
     } @empty {
       <p class="no-results">Nenhuma seleção corresponde à sua pesquisa.</p>

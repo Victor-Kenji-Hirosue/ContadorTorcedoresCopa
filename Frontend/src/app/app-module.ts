@@ -24,8 +24,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { TimesService } from './times-component/times-service';
-import { MatOption } from "@angular/material/select";
-
+import { MatOption, MatSelectModule } from '@angular/material/select';
+import { CadastroComponent } from './features/auth/cadastro-component/cadastro-component';
 
 @NgModule({
   declarations: [
@@ -35,6 +35,7 @@ import { MatOption } from "@angular/material/select";
     NavBarComponent,
     TimesComponent,
     LoginComponent,
+    CadastroComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,14 +51,13 @@ import { MatOption } from "@angular/material/select";
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    MatSelectModule,
     NgbModule,
     ReactiveFormsModule,
     FormsModule,
-    MatOption
-],
-  providers: [
-    TimesService,
-    provideBrowserGlobalErrorListeners()],
+    MatOption,
+  ],
+  providers: [TimesService, provideBrowserGlobalErrorListeners()],
   bootstrap: [App],
 })
 export class AppModule {}
